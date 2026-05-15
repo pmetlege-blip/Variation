@@ -1,0 +1,36 @@
+{
+  "_comment": "Copy this file to config.json and fill in. Never commit config.json.",
+  "builder": {
+    "name": "Renovate 8",
+    "abn": "<FILL IN — 11 digits, no spaces>",
+    "license": "<FILL IN — NSW Fair Trading Contractor Licence number>",
+    "address": "<FILL IN — registered business address>",
+    "email": "<FILL IN>",
+    "phone": "<FILL IN>",
+    "signatory": "Paul Metlege"
+  },
+  "dropbox": {
+    "root": "/Renovate 8/Projects",
+    "variations_subfolder": "03_Variations",
+    "register_subfolder": "_Register"
+  },
+  "defaults": {
+    "markup_pct": null,
+    "gst_rate": 0.10,
+    "payment_terms": "Payable on issue of next progress claim, or within 14 days of separate invoice, whichever applies.",
+    "contract_form": "MBA NSW Residential Building Contract"
+  },
+  "projects": {
+    "_example_42SMITH": {
+      "code": "42SMITH",
+      "name": "42 Smith Street, Bondi NSW 2026",
+      "client_name": "John & Jane Smith",
+      "client_name_2": "",
+      "client_email": "john.smith@example.com",
+      "client_phone": "0400 000 000",
+      "contract_date": "2026-01-15",
+      "original_contract_sum_inc_gst": 850000.00,
+      "dropbox_path": "/Renovate 8/Projects/42SMITH - Smith"
+    }
+  }
+}
