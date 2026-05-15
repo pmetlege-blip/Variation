@@ -1,5 +1,6 @@
-# Operator-specific config (contains ABN, licence, etc.)
-scripts/config.json
+# Operator-specific config (kept gitignored as a habit — config.example.json is the committed reference)
+# Remove this line if you want to commit Renovate 8's config.json.
+# scripts/config.json
 
 # Local testing scratch
 working/

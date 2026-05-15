@@ -25,8 +25,22 @@ from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
 from openpyxl.workbook.defined_name import DefinedName
 from pathlib import Path
+import json
 
-OUTPUT = Path(__file__).resolve().parent.parent / "templates" / "master_register_template.xlsx"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT = REPO_ROOT / "templates" / "master_register_template.xlsx"
+CONFIG = REPO_ROOT / "scripts" / "config.json"
+
+
+def load_builder():
+    """Return builder defaults from scripts/config.json (or empty strings if missing)."""
+    if not CONFIG.exists():
+        return {"name": "Renovate 8", "abn": "", "licence": "", "address": "", "email": "", "phone": ""}
+    with open(CONFIG) as f:
+        return json.load(f).get("builder", {})
+
+
+BUILDER = load_builder()
 
 # Colour palette
 NAVY = "1F3864"
@@ -132,12 +146,12 @@ def build_setup_sheet(wb):
         ("Client phone", ""),
         ("Contract date", ""),
         ("Original contract sum (inc GST)", 0),
-        ("Builder name", "Renovate 8"),
-        ("Builder ABN", ""),
-        ("Builder NSW Contractor License #", ""),
-        ("Builder address", ""),
-        ("Builder contact email", ""),
-        ("Builder contact phone", ""),
+        ("Builder name", BUILDER.get("name", "Renovate 8")),
+        ("Builder ABN", BUILDER.get("abn", "")),
+        ("Builder NSW Contractor Licence #", BUILDER.get("licence", "")),
+        ("Builder address", BUILDER.get("address", "")),
+        ("Builder contact email", BUILDER.get("email", "")),
+        ("Builder contact phone", BUILDER.get("phone", "")),
         ("Contract form", "MBA NSW Residential Building Contract"),
         ("Dropbox root for project", ""),
         ("Default markup %", "(leave blank — set per variation)"),

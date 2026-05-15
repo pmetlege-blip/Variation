@@ -63,3 +63,15 @@ When Paul forwards an email containing an invoice or variation request:
 - Setting up a new project? Copy `templates/master_register_template.xlsx`
   into the project's Dropbox folder and rename it.
 - Need to check compliance? See `docs/legal_compliance.md`.
+
+## Logo
+
+To put the Renovate 8 logo on the variation notice, save the image as one of:
+
+- `templates/logo.png`  (preferred)
+- `templates/logo.jpg`
+- `templates/logo.jpeg`
+
+then re-run `python3 scripts/build_notice_template.py`. The logo replaces
+the "RENOVATE 8" text heading; if no logo file is present, the text
+heading is used instead. Sized to 6 cm wide, centered.

@@ -20,8 +20,38 @@ from docx.enum.table import WD_ALIGN_VERTICAL
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from pathlib import Path
+import json
 
-OUTPUT = Path(__file__).resolve().parent.parent / "templates" / "variation_notice_template.docx"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT = REPO_ROOT / "templates" / "variation_notice_template.docx"
+CONFIG = REPO_ROOT / "scripts" / "config.json"
+
+
+def load_builder_fields():
+    """Read scripts/config.json if present and return a dict of builder placeholder replacements.
+    Falls back to keeping {{BUILDER_*}} placeholders if config is absent."""
+    fields = {
+        "BUILDER_ADDRESS": "{{BUILDER_ADDRESS}}",
+        "BUILDER_ABN": "{{BUILDER_ABN}}",
+        "BUILDER_LICENCE": "{{BUILDER_LICENCE}}",
+        "BUILDER_EMAIL": "{{BUILDER_EMAIL}}",
+        "BUILDER_PHONE": "{{BUILDER_PHONE}}",
+        "BUILDER_SIGNATORY": "{{BUILDER_SIGNATORY}}",
+    }
+    if CONFIG.exists():
+        with open(CONFIG) as f:
+            cfg = json.load(f)
+        b = cfg.get("builder", {})
+        if b.get("address"): fields["BUILDER_ADDRESS"] = b["address"]
+        if b.get("abn"): fields["BUILDER_ABN"] = b["abn"]
+        if b.get("licence"): fields["BUILDER_LICENCE"] = b["licence"]
+        if b.get("email"): fields["BUILDER_EMAIL"] = b["email"]
+        if b.get("phone"): fields["BUILDER_PHONE"] = b["phone"]
+        if b.get("signatory"): fields["BUILDER_SIGNATORY"] = b["signatory"]
+    return fields
+
+
+BUILDER = load_builder_fields()
 
 NAVY = RGBColor(0x1F, 0x38, 0x64)
 RED = RGBColor(0xC0, 0x00, 0x00)
@@ -99,15 +129,29 @@ def build():
     style.font.size = Pt(10)
 
     # === Header band ===
-    add_heading(doc, "RENOVATE 8", level=0)
+    # If a logo image exists at templates/logo.{png,jpg,jpeg}, insert it in
+    # place of the "RENOVATE 8" text heading. Otherwise fall back to text.
+    logo_candidates = [
+        REPO_ROOT / "templates" / "logo.png",
+        REPO_ROOT / "templates" / "logo.jpg",
+        REPO_ROOT / "templates" / "logo.jpeg",
+    ]
+    logo_path = next((p for p in logo_candidates if p.exists()), None)
+    if logo_path is not None:
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = p.add_run()
+        run.add_picture(str(logo_path), width=Cm(6.0))
+    else:
+        add_heading(doc, "RENOVATE 8", level=0)
     add_para(
         doc,
-        "{{BUILDER_ADDRESS}}    |    ABN {{BUILDER_ABN}}    |    NSW Contractor Licence {{BUILDER_LICENCE}}",
+        f'{BUILDER["BUILDER_ADDRESS"]}    |    ABN {BUILDER["BUILDER_ABN"]}    |    NSW Contractor Licence {BUILDER["BUILDER_LICENCE"]}',
         italic=True, color=GREY, align=WD_ALIGN_PARAGRAPH.CENTER, size=9,
     )
     add_para(
         doc,
-        "{{BUILDER_EMAIL}}    |    {{BUILDER_PHONE}}",
+        f'{BUILDER["BUILDER_EMAIL"]}    |    {BUILDER["BUILDER_PHONE"]}',
         italic=True, color=GREY, align=WD_ALIGN_PARAGRAPH.CENTER, size=9,
     )
 
@@ -373,7 +417,7 @@ def build():
 
     sig_cell(sigt.rows[0].cells[0], "CLIENT (Owner)", "{{CLIENT_NAME}}", "________________")
     sig_cell(sigt.rows[0].cells[1], "CLIENT (Co-owner, if applicable)", "{{CLIENT_NAME_2}}", "________________")
-    sig_cell(sigt.rows[1].cells[0], "RENOVATE 8 (Builder)", "{{BUILDER_SIGNATORY}}", "{{DATE_ISSUED}}")
+    sig_cell(sigt.rows[1].cells[0], "RENOVATE 8 (Builder)", BUILDER["BUILDER_SIGNATORY"], "{{DATE_ISSUED}}")
     sig_cell(sigt.rows[1].cells[1], "Witness (if required)", "________________", "________________")
 
     # === Footer notice ===
@@ -391,7 +435,7 @@ def build():
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(
-        "Renovate 8  •  ABN {{BUILDER_ABN}}  •  NSW Contractor Licence {{BUILDER_LICENCE}}  •  "
+        f'Renovate 8  •  ABN {BUILDER["BUILDER_ABN"]}  •  NSW Contractor Licence {BUILDER["BUILDER_LICENCE"]}  •  '
         "Filed: {{VAR_NUMBER}} / v{{NOTICE_VERSION}}"
     )
     r.italic = True
