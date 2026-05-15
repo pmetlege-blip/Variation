@@ -146,7 +146,8 @@ def build_setup_sheet(wb):
         ("Client phone", ""),
         ("Contract date", ""),
         ("Original contract sum (inc GST)", 0),
-        ("Builder name", BUILDER.get("name", "Renovate 8")),
+        ("Builder name (brand)", BUILDER.get("name", "Renovate 8")),
+        ("Builder legal entity (licence holder)", BUILDER.get("legal_name", "")),
         ("Builder ABN", BUILDER.get("abn", "")),
         ("Builder NSW Contractor Licence #", BUILDER.get("licence", "")),
         ("Builder address", BUILDER.get("address", "")),
@@ -174,8 +175,9 @@ def build_setup_sheet(wb):
     wb.defined_names["ClientName"] = DefinedName("ClientName", attr_text="'Project Setup'!$B$5")
     wb.defined_names["OriginalContractSum"] = DefinedName("OriginalContractSum", attr_text="'Project Setup'!$B$9")
     wb.defined_names["BuilderName"] = DefinedName("BuilderName", attr_text="'Project Setup'!$B$10")
-    wb.defined_names["BuilderABN"] = DefinedName("BuilderABN", attr_text="'Project Setup'!$B$11")
-    wb.defined_names["BuilderLicense"] = DefinedName("BuilderLicense", attr_text="'Project Setup'!$B$12")
+    wb.defined_names["BuilderLegalEntity"] = DefinedName("BuilderLegalEntity", attr_text="'Project Setup'!$B$11")
+    wb.defined_names["BuilderABN"] = DefinedName("BuilderABN", attr_text="'Project Setup'!$B$12")
+    wb.defined_names["BuilderLicense"] = DefinedName("BuilderLicense", attr_text="'Project Setup'!$B$13")
 
 
 def build_variations_sheet(wb):

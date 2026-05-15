@@ -31,6 +31,7 @@ def load_builder_fields():
     """Read scripts/config.json if present and return a dict of builder placeholder replacements.
     Falls back to keeping {{BUILDER_*}} placeholders if config is absent."""
     fields = {
+        "BUILDER_TRADING_LINE": "{{BUILDER_TRADING_LINE}}",
         "BUILDER_ADDRESS": "{{BUILDER_ADDRESS}}",
         "BUILDER_ABN": "{{BUILDER_ABN}}",
         "BUILDER_LICENCE": "{{BUILDER_LICENCE}}",
@@ -42,6 +43,7 @@ def load_builder_fields():
         with open(CONFIG) as f:
             cfg = json.load(f)
         b = cfg.get("builder", {})
+        if b.get("trading_as_line"): fields["BUILDER_TRADING_LINE"] = b["trading_as_line"]
         if b.get("address"): fields["BUILDER_ADDRESS"] = b["address"]
         if b.get("abn"): fields["BUILDER_ABN"] = b["abn"]
         if b.get("licence"): fields["BUILDER_LICENCE"] = b["licence"]
@@ -144,6 +146,12 @@ def build():
         run.add_picture(str(logo_path), width=Cm(6.0))
     else:
         add_heading(doc, "RENOVATE 8", level=0)
+    # Legal trading-as line (the licensed entity that holds the contract)
+    add_para(
+        doc,
+        BUILDER["BUILDER_TRADING_LINE"],
+        bold=True, color=GREY, align=WD_ALIGN_PARAGRAPH.CENTER, size=10,
+    )
     add_para(
         doc,
         f'{BUILDER["BUILDER_ADDRESS"]}    |    ABN {BUILDER["BUILDER_ABN"]}    |    NSW Contractor Licence {BUILDER["BUILDER_LICENCE"]}',
@@ -435,7 +443,7 @@ def build():
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run(
-        f'Renovate 8  •  ABN {BUILDER["BUILDER_ABN"]}  •  NSW Contractor Licence {BUILDER["BUILDER_LICENCE"]}  •  '
+        f'{BUILDER["BUILDER_TRADING_LINE"]}  •  ABN {BUILDER["BUILDER_ABN"]}  •  NSW Contractor Licence {BUILDER["BUILDER_LICENCE"]}  •  '
         "Filed: {{VAR_NUMBER}} / v{{NOTICE_VERSION}}"
     )
     r.italic = True

@@ -2,6 +2,8 @@
   "_comment": "Operator config for Renovate 8. Gitignored. Source of truth for build_notice_template.py and build_register_template.py.",
   "builder": {
     "name": "Renovate 8",
+    "legal_name": "Gold and Eagle Constructions",
+    "trading_as_line": "Gold and Eagle Constructions trading as Renovate 8",
     "abn": "72 098 695 446",
     "licence": "139701C",
     "address": "62 Budyan Road, Grays Point NSW 2232",
