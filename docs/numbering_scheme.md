@@ -3,65 +3,64 @@
 ## Format
 
 ```
-[PROJECT_CODE]-VAR-[###]
+V[n]            (e.g. V1, V2, V10, V11)
 ```
 
-Examples:
-- `42SMITH-VAR-001`
-- `42SMITH-VAR-002`
-- `17BRIDG-VAR-001`
+Matches the existing Renovate 8 convention in Dropbox — looking at
+`/Projects/Annandale - 137 Annandale Street/Variations/`:
+
+- V1
+- V2 - Asbestos under Concrete
+- V3 - Absestos Removal
+- V4 - Bamboo Works and water detailing
+
+The next allocated variation in that project would be `V5`.
 
 ## Rules
 
-1. **Sequential per project.** Numbers start at `001` for each new project
-   and increment by 1. There is no global cross-project counter.
-2. **Zero-padded to 3 digits.** Allows clean sorting in Dropbox and Excel.
-   If a project somehow exceeds 999 variations, expand to 4 digits and
-   reissue the master register.
-3. **No gaps.** Even cancelled variations keep their number — the row in
-   the register is marked `CANCELLED` but the number is never reused.
-4. **No sub-numbers** (no `VAR-007a`, no `VAR-007.1`). If a variation needs
-   amending after it's been issued, either:
-   - reissue the same number with a new version (`v2`, `v3`, ...) — for
-     a Phase 1 → Phase 2 transition, or for correcting a typo, OR
-   - raise a new variation number — if the scope materially changes.
-5. **Cancellations don't reset the counter.** If `VAR-005` is cancelled,
-   the next variation is still `VAR-006`.
+1. **Per-project sequential.** Reset to `V1` for each new project.
+2. **No zero-padding.** `V10`, not `V010`. (This matches the existing
+   convention; if any project hits V100+, sorting still works because the
+   register column sorts numerically, not alphabetically.)
+3. **No gaps.** Cancelled variations keep their number. Move the folder to
+   `Variations/Archive/` if you want it out of the way; the register row
+   stays with status `CANCELLED`.
+4. **No sub-numbers.** No `V7a`, no `V7.1`. If a variation needs amending
+   after issue, either:
+   - reissue under the same V# with a new notice version (`v2`, `v3`, ...),
+     OR
+   - raise a new V# if scope materially changes.
 
 ## Where the number lives
 
-- **Folder name**: `42SMITH-VAR-007 - extra-power-points-kitchen/`
-- **Notice header**: `Variation Number: 42SMITH-VAR-007`
-- **Notice filename**: `VAR-007_v1_RAISED.pdf`
-- **Register row**: column A, value `42SMITH-VAR-007`
-- **Invoice / progress claim reference**: `VAR-007`
+- **Folder name:** `V5 - extra power points kitchen/`
+- **Notice header:** `Variation Number: V5`
+- **Notice filename:** `V5_v1_RAISED.pdf`
+- **Register row:** column A, value `V5`
+- **Progress claim / invoice line:** `V5 — [short description]`
 
-## How to allocate
+## How the next number is allocated
 
-Manually:
+When Claude allocates a new variation for a project:
 
-1. Open the project's master register.
-2. Find the highest existing variation number for that project.
-3. Add 1, zero-pad.
+1. List the project's `Variations/` folder via Dropbox MCP.
+2. Find all entries matching `V<n>` or `V<n> - ...`.
+3. Take `max(n) + 1`.
+4. (Cross-check) Read the register's VAR # column and take the max from
+   there too. The higher of the two wins, so cancelled-but-not-yet-archived
+   variations aren't reused.
 
-Via script:
+If you're migrating mid-project and want to force a specific number, use
+`scripts/create_variation.py --number 7`.
 
-```bash
-python3 scripts/create_variation.py --project 42SMITH --description "..."
-```
+## Versioning within a single V#
 
-The script reads the register, allocates the next number, creates the
-folder, and stubs an initial row. (It does NOT generate the notice — that
-is still done from the template.)
+Inside one V#, the notice goes through versions as the variation moves
+through phases:
 
-## Versioning within a variation
+- `V5_v1_RAISED.pdf` — Phase 1 (price TBC or indicative).
+- `V5_v2_FINALISED.pdf` — Phase 2 (confirmed price).
+- `V5_v3_AMENDED.pdf` — rare; only if a finalised notice needs correcting.
 
-Within a single variation number, the notice goes through versions:
-
-- `v1_RAISED` — Phase 1 notice, price TBC or indicative.
-- `v2_FINALISED` — Phase 2 notice, confirmed price.
-- `v3_AMENDED` — only if the FINALISED notice needs correcting (e.g.,
-  client-requested scope tweak, typo, recalculation). Rare.
-
-Each version is a new PDF in `03_Notice/`. **Never overwrite** an older
-version — keep the history for the audit trail.
+Each version is a new file in `03_Notice/` — never overwrite a prior
+version, so the audit trail is intact.

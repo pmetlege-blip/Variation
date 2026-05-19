@@ -8,10 +8,15 @@ in NSW, compliant with the **Home Building Act 1989 (NSW)** and the
 
 1. **Receives** variation requests via email (from Paul Metlege or directly from clients/site).
 2. **Parses** the email to extract project, scope, trigger, and known costs.
-3. **Numbers** the variation sequentially per project (e.g. `42SMITH-VAR-007`).
-4. **Creates** a dedicated Dropbox folder for the variation under the project.
-5. **Files** invoices, quotes, photos, emails, and the formal notice in the folder.
-6. **Adds** the variation to the project's master Excel register.
+3. **Numbers** the variation sequentially per project (e.g. `V5` — matching
+   Renovate 8's existing Dropbox convention).
+4. **Creates** a `V# - [description]/` folder inside the project's existing
+   `Variations/` folder in Dropbox.
+5. **Files** invoices, quotes, photos, emails, and the formal notice in
+   the 5 standard subfolders (`01_Source/`, `02_Costing/`, `03_Notice/`,
+   `04_Approval/`, `05_Invoicing/`).
+6. **Adds** the variation to the project's `Variation Register.xlsx`
+   (one register per project, in the project's `Variations/` folder).
 7. **Issues** a formal NSW-compliant Variation Notice to the client:
    - **Phase 1 — Raised:** description + scope + indicative price (or TBC) + time impact.
    - **Phase 2 — Finalised:** confirmed price + signed acknowledgment + new contract sum.

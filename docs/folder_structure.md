@@ -1,90 +1,109 @@
 # Dropbox Folder Structure
 
-All variation documents live in Dropbox. Structure is **strict** so that the
-register, the notice, and the source documents can always be cross-referenced.
+The system works **inside** the existing project structure Renovate 8 already
+uses — no new top-level folders are created.
 
-## Top-level
-
-```
-/Renovate 8/
-└── Projects/
-    └── [PROJECT_CODE] - [Client surname or site address]/
-        ├── 00_Contract/
-        ├── 01_Plans_and_Specs/
-        ├── 02_Progress_Claims/
-        ├── 03_Variations/
-        │   ├── _Register/
-        │   │   └── [PROJECT_CODE]_Variation_Register.xlsx     ← master register
-        │   ├── [PROJECT_CODE]-VAR-001 - [short slug]/
-        │   ├── [PROJECT_CODE]-VAR-002 - [short slug]/
-        │   └── ...
-        ├── 04_Photos/
-        ├── 05_Correspondence/
-        └── 99_Archive/
-```
-
-## Per-variation folder
-
-Inside each `[PROJECT_CODE]-VAR-###` folder:
+## Top-level (already exists)
 
 ```
-[PROJECT_CODE]-VAR-### - [short slug]/
-├── 01_Source/
-│   ├── original_email.eml          forwarded email from Paul (or client)
-│   ├── invoice_<supplier>.pdf      any supplier invoices
-│   ├── quote_<supplier>.pdf        any supplier quotes
-│   ├── photos/                     site photos (before / during / after)
-│   └── plans_markup.pdf            marked-up drawings if applicable
-├── 02_Costing/
-│   ├── cost_breakdown.xlsx         internal cost-to-me workings
-│   └── markup_calc.xlsx            (optional) markup decision rationale
-├── 03_Notice/
-│   ├── VAR-###_v1_RAISED.docx      Phase 1 notice (price TBC or indicative)
-│   ├── VAR-###_v1_RAISED.pdf       PDF of the above (what is sent)
-│   ├── VAR-###_v2_FINALISED.docx   Phase 2 notice (confirmed price)
-│   ├── VAR-###_v2_FINALISED.pdf
-│   └── VAR-###_SIGNED.pdf          fully signed copy returned by client
-├── 04_Approval/
-│   ├── client_approval_email.eml   written approval (HBA s.7AAA evidence)
-│   └── any_back_and_forth.eml      negotiation correspondence
-└── 05_Invoicing/
-    ├── claim_reference.txt         which progress claim or invoice it went on
-    └── invoice_to_client.pdf       if invoiced separately
+/Projects/
+└── [Suburb] - [Address]/                       e.g. "Annandale - 137 Annandale Street"
+    ├── Construction/
+    ├── Contract/
+    ├── Client/
+    ├── Council/
+    ├── Consultant/
+    ├── HOWI/
+    ├── Handover/
+    ├── Progress Claim/
+    ├── Programme/
+    ├── Site/
+    ├── Tender Information/
+    └── Variations/                              ← all variation work lives here
+```
+
+(Folder names vary slightly across older projects; the system reads the
+project folder by name rather than assuming a fixed list.)
+
+## Inside `Variations/`
+
+```
+Variations/
+├── Variation Register.xlsx                     ← per-project master register
+├── Archive/                                    ← (existing) cancelled / obsolete
+├── V1/                                         ← existing
+├── V2 - Asbestos under Concrete/               ← existing
+├── V3 - Absestos Removal/                      ← existing
+├── V4 - Bamboo Works and water detailing/      ← existing
+├── V5 - [description]/                         ← created by the system
+├── V6 - [description]/                         ← ...
+└── ...
+```
+
+## Per-variation folder layout
+
+Inside each `V# - [description]/`:
+
+```
+V# - [description]/
+├── 01_Source/                  what came in
+│   ├── original_email.eml      forwarded email from Paul or client
+│   ├── invoice_<supplier>.pdf  supplier invoices
+│   ├── quote_<supplier>.pdf    supplier quotes
+│   ├── photos/                 site photos
+│   └── plans_markup.pdf        marked-up drawings if applicable
+├── 02_Costing/                 CONFIDENTIAL
+│   └── cost_breakdown.xlsx     internal cost-to-me workings
+├── 03_Notice/                  what the client sees
+│   ├── V#_v1_RAISED.docx       Phase 1 (price TBC or indicative)
+│   ├── V#_v1_RAISED.pdf
+│   ├── V#_v2_FINALISED.docx    Phase 2 (confirmed price)
+│   ├── V#_v2_FINALISED.pdf
+│   └── V#_SIGNED.pdf           fully signed copy
+├── 04_Approval/                proof of acceptance under HBA s.7AAA
+│   └── client_approval_email.eml
+└── 05_Invoicing/               money trail
+    ├── claim_reference.txt     which progress claim / invoice it went on
+    └── invoice_to_client.pdf
 ```
 
 ## Naming rules
 
-- **PROJECT_CODE** — short uppercase identifier, no spaces. Either:
-  - the street number + first 5 letters of street/surname (e.g. `42SMITH`,
-    `17BRIDG`), or
-  - an explicit job code if the contract uses one.
-- **VAR number** — zero-padded to 3 digits. Reset to `001` for each new project.
-- **Short slug** — 3–6 words, kebab-case, plain English. Examples:
-  - `extra-power-point-kitchen`
-  - `engineer-redesign-footings`
-  - `client-changed-tile-spec`
-- Never rename or delete a folder once created. If a variation is cancelled,
-  add the suffix ` - CANCELLED` and update the register status.
+- **Project folder** — already named by Paul. The system reads it as-is.
+  Example: `Annandale - 137 Annandale Street`.
+- **V number** — `V` + integer, **no zero-padding**, matching the existing
+  Renovate 8 convention (`V1`, `V2`, …, `V10`, `V11`, ...).
+- **Slug** — short plain-English description, hyphens/spaces OK. Matches
+  the existing pattern (e.g. `V2 - Asbestos under Concrete`).
+- **Numbering is per-project.** Reset to V1 for each new project.
+- **No gaps.** Even cancelled variations keep their number; the
+  `Archive/` subfolder can hold cancelled or duplicate folders if needed.
 
-## Why this structure
+## Master register
 
-- **`01_Source`** isolates "what came in" so the audit trail is preserved.
-- **`02_Costing`** is **confidential** — internal cost-to-me workings live
-  here and never go to the client. (Dropbox folder permissions on this
-  sub-folder can be restricted further if the project team grows.)
-- **`03_Notice`** holds the documents the **client actually sees**.
-- **`04_Approval`** isolates the s.7AAA written-evidence that the client
-  accepted the variation. This is the single most legally important folder.
-- **`05_Invoicing`** ties the variation to the money trail.
-
-## Master register location
-
-The per-project master register lives at:
+Lives at:
 
 ```
-/Renovate 8/Projects/[PROJECT_CODE] - .../03_Variations/_Register/[PROJECT_CODE]_Variation_Register.xlsx
+/Projects/[Suburb] - [Address]/Variations/Variation Register.xlsx
 ```
 
-There is **no global cross-project register** by design — keep books per-project
-so that a single client's documents can be exported cleanly (and to keep
-cost-to-me data scoped to one site at a time).
+One register per project. Sits in the same folder as the V# folders so
+opening either gets you to the other in one click.
+
+Existing Excel files in the Variations folder (e.g. `137a.Payment
+Milestone Schedule.Variation.YYMMDD.xlsx`) are left untouched.
+
+## Where the per-variation source documents go
+
+When Paul forwards an email with an invoice:
+
+1. The forwarded email → `01_Source/original_email.eml`
+2. Attached invoices → `01_Source/invoice_<supplier>.pdf`
+3. Attached photos → `01_Source/photos/`
+4. Markup drawings → `01_Source/`
+5. Internal cost workings → `02_Costing/cost_breakdown.xlsx` (stays out of
+   the client's hands; Dropbox permissions can be tightened on this
+   subfolder if the team grows)
+6. The formal notice → `03_Notice/` (this is what gets emailed to the client)
+7. The signed-and-returned notice + approval email → `04_Approval/`
+8. The progress-claim line reference or standalone invoice → `05_Invoicing/`

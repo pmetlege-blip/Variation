@@ -12,9 +12,9 @@
     "signatory": "Paul Metlege"
   },
   "dropbox": {
-    "root": "/Renovate 8/Projects",
-    "variations_subfolder": "03_Variations",
-    "register_subfolder": "_Register"
+    "root": "/Projects",
+    "variations_subfolder": "Variations",
+    "register_filename": "Variation Register.xlsx"
   },
   "defaults": {
     "markup_pct": null,
