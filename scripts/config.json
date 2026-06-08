@@ -22,5 +22,37 @@
     "payment_terms": "Payable on issue of next progress claim, or within 14 days of separate invoice, whichever applies.",
     "contract_form": "MBA NSW Residential Building Contract"
   },
-  "projects": {}
+  "projects": {
+    "137a": {
+      "dropbox_folder": "Annandale - 137 Annandale Street",
+      "project_name": "137 Annandale Street, Annandale",
+      "client": "Jon and Stacey Day",
+      "variations_path": "Variations"
+    },
+    "47t": {
+      "dropbox_folder": "Haberfield - 47 Tillock Street",
+      "project_name": "47 Tillock Street, Haberfield",
+      "client": "Joanne King",
+      "variations_path": "Variations"
+    },
+    "11e": {
+      "dropbox_folder": "Lilyfield - 11 Eric Street",
+      "project_name": "11 Eric Street, Lilyfield",
+      "client": "Nicholas Lewis and Sarah Johnson",
+      "variations_path": "Variations"
+    },
+    "10w": {
+      "dropbox_folder": "Taren Point - 10 Woodlands Road",
+      "project_name": "10 Woodlands Road, Taren Point",
+      "client": "Chris and Joanna Gialouris",
+      "variations_path": "Variations/Phase 2",
+      "notes": "Staged project. Work ONLY in the 'Phase 2' subfolder of Variations; the 'Phase 1' section is historical and must NEVER be created in or modified. Contract sum is TBC."
+    },
+    "44m": {
+      "dropbox_folder": "Sylvania Waters - 44 Macintyre Crescent",
+      "project_name": "44 Macintyre Crescent, Sylvania Waters",
+      "client": "David and Vivian Salim",
+      "variations_path": "Variations"
+    }
+  }
 }

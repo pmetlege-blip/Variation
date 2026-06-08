@@ -67,6 +67,23 @@ def load_config() -> dict:
         return json.load(f)
 
 
+def resolve_project(cfg: dict, *, project_folder: str | None = None,
+                    project_code: str | None = None) -> tuple[str | None, dict]:
+    """Find a project in config.projects by its code or its Dropbox folder name.
+
+    Returns (code, project_dict). project_dict is {} if no match — the caller
+    then falls back to the global dropbox defaults.
+    """
+    projects = cfg.get("projects", {})
+    if project_code and project_code in projects:
+        return project_code, projects[project_code]
+    if project_folder:
+        for code, p in projects.items():
+            if p.get("dropbox_folder") == project_folder:
+                return code, p
+    return project_code, {}
+
+
 def slugify(s: str) -> str:
     s = re.sub(r"[^a-zA-Z0-9]+", " ", s).strip()
     return s[:60]
@@ -140,6 +157,14 @@ def main() -> int:
     ap.add_argument("--project-folder", required=True,
                     help='Dropbox folder name under /Projects, '
                          'e.g. "Annandale - 137 Annandale Street"')
+    ap.add_argument("--project-code", default=None,
+                    help='Project code from config.projects, e.g. "10w". Used to '
+                         'look up per-project settings (variations_path, etc.).')
+    ap.add_argument("--variations-subpath", default=None,
+                    help='Override the subfolder (under the project) where V# '
+                         'folders live. Defaults to the project\'s configured '
+                         'variations_path, else "Variations". For 10w this is '
+                         '"Variations/Phase 2".')
     ap.add_argument("--description", required=True,
                     help="Short description (will be cleaned for the folder name)")
     ap.add_argument("--trigger", default="Client request",
@@ -158,6 +183,14 @@ def main() -> int:
     args = ap.parse_args()
 
     project_folder = args.project_folder
+
+    # Resolve per-project settings. The variations sub-path can differ per
+    # project (e.g. 10w files variations under "Variations/Phase 2").
+    proj_code, project = resolve_project(
+        cfg, project_folder=project_folder, project_code=args.project_code)
+    variations_subpath = (args.variations_subpath
+                          or project.get("variations_path")
+                          or variations_subfolder)
 
     # Resolve register path. Locally, working/<sanitized_folder>/<filename>.
     if args.register:
@@ -185,17 +218,22 @@ def main() -> int:
     var_id = f"V{n}"
     slug = slugify(args.description)
     folder_name = f"{var_id} - {slug}" if slug else var_id
-    dropbox_folder = f"{dropbox_root}/{project_folder}/{variations_subfolder}/{folder_name}"
+    dropbox_folder = f"{dropbox_root}/{project_folder}/{variations_subpath}/{folder_name}"
 
     print(f"Project folder:   {project_folder}")
+    if proj_code:
+        print(f"Project code:     {proj_code}")
     print(f"Variation ID:     {var_id}")
     print(f"Slug:             {slug}")
     print(f"Trigger:          {args.trigger}")
+    print(f"Variations path:  {variations_subpath}")
+    if project.get("notes"):
+        print(f"!! Project note:  {project['notes']}")
     print(f"Local register:   {register_path}")
     print(f"Dropbox plan:")
     for p in planned_dropbox_paths(project_folder, var_id, slug,
                                     dropbox_root=dropbox_root,
-                                    variations_subfolder=variations_subfolder):
+                                    variations_subfolder=variations_subpath):
         print(f"   create folder: {p}")
 
     if args.dry_run:
@@ -216,7 +254,7 @@ def main() -> int:
     print(f"  3. Generate Notice from templates/variation_notice_template.docx,")
     print(f"     save as 03_Notice/{var_id}_v1_RAISED.docx, export to PDF.")
     print(f"  4. Upload the updated register back to Dropbox at:")
-    print(f"     {dropbox_root}/{project_folder}/{variations_subfolder}/{register_filename}")
+    print(f"     {dropbox_root}/{project_folder}/{variations_subpath}/{register_filename}")
     return 0
 
 

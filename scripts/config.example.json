@@ -1,18 +1,20 @@
 {
-  "_comment": "Copy this file to config.json and fill in. Never commit config.json.",
+  "_comment": "Reference template. Copy to config.json and fill in. config.json IS committed for Renovate 8 (see .gitignore), but keep secrets out if you fork this.",
   "builder": {
     "name": "Renovate 8",
-    "abn": "<FILL IN — 11 digits, no spaces>",
-    "license": "<FILL IN — NSW Fair Trading Contractor Licence number>",
+    "legal_name": "<FILL IN — licence-holding entity, e.g. Gold and Eagle Constructions>",
+    "trading_as_line": "<FILL IN — e.g. Gold and Eagle Constructions trading as Renovate 8>",
+    "abn": "<FILL IN — 11 digits>",
+    "licence": "<FILL IN — NSW Fair Trading Contractor Licence number>",
     "address": "<FILL IN — registered business address>",
     "email": "<FILL IN>",
     "phone": "<FILL IN>",
     "signatory": "Paul Metlege"
   },
   "dropbox": {
-    "root": "/Renovate 8/Projects",
-    "variations_subfolder": "03_Variations",
-    "register_subfolder": "_Register"
+    "root": "/Projects",
+    "variations_subfolder": "Variations",
+    "register_filename": "Variation Register.xlsx"
   },
   "defaults": {
     "markup_pct": null,
@@ -21,16 +23,19 @@
     "contract_form": "MBA NSW Residential Building Contract"
   },
   "projects": {
-    "_example_42SMITH": {
-      "code": "42SMITH",
-      "name": "42 Smith Street, Bondi NSW 2026",
-      "client_name": "John & Jane Smith",
-      "client_name_2": "",
-      "client_email": "john.smith@example.com",
-      "client_phone": "0400 000 000",
-      "contract_date": "2026-01-15",
-      "original_contract_sum_inc_gst": 850000.00,
-      "dropbox_path": "/Renovate 8/Projects/42SMITH - Smith"
+    "_comment": "Keyed by the short project code. variations_path is the subfolder, under the project, where the V# folders live — defaults to dropbox.variations_subfolder. Override it for projects with a non-standard layout (e.g. staged jobs that file variations under 'Variations/Phase 2').",
+    "_example_code": {
+      "dropbox_folder": "<Suburb> - <Street Address>",
+      "project_name": "<Street Address>, <Suburb>",
+      "client": "<Client name(s)>",
+      "variations_path": "Variations"
+    },
+    "_example_staged": {
+      "dropbox_folder": "Taren Point - 10 Woodlands Road",
+      "project_name": "10 Woodlands Road, Taren Point",
+      "client": "Chris and Joanna Gialouris",
+      "variations_path": "Variations/Phase 2",
+      "notes": "Staged project — file variations under the Phase 2 subfolder only."
     }
   }
 }

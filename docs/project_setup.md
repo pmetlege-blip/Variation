@@ -88,6 +88,30 @@ files use the `137a.` prefix, so the register is:
 One register per project, living alongside the `V#` folders inside
 `Variations/`.
 
+## Per-project layout overrides
+
+Most projects file their `V#` folders directly under `Variations/`. Some don't,
+and the registry in `scripts/config.json` records the exception via each
+project's `variations_path`:
+
+| Code | Project | `variations_path` | Next V# at last check |
+|---|---|---|---|
+| 137a | 137 Annandale Street, Annandale | `Variations` | V5 |
+| 47t | 47 Tillock Street, Haberfield | `Variations` | V4 |
+| 11e | 11 Eric Street, Lilyfield | `Variations` | V16 |
+| 10w | 10 Woodlands Road, Taren Point | **`Variations/Phase 2`** | V13 |
+| 44m | 44 Macintyre Crescent, Sylvania Waters | `Variations` | V39 |
+
+**10w (Taren Point) is a staged job.** All variation work happens inside
+`Variations/Phase 2/`. The `Variations/Phase 1/` section is historical and must
+**never** be created in or modified. `create_variation.py --project-code 10w`
+reads this from config and targets `Phase 2/` automatically; it also prints the
+project note as a reminder. The 10w register therefore lives at
+`…/Variations/Phase 2/`, not directly under `Variations/`.
+
+(The "next V#" column is a snapshot — the live next number is always computed by
+listing the relevant folder via the Dropbox MCP before allocating.)
+
 ## What never changes per project
 
 - Builder identity on the notice: **Gold and Eagle Constructions trading as
