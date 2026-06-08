@@ -28,14 +28,15 @@ When the price is later finalised, repeat steps 7–9 but for Phase 2 — FINALI
 
 ### Pattern B — Paul has already started the V-folder
 
-Paul created the `V# - <description>/` folder himself and dropped source material into it (notes, supplier quotes, invoices, plans, photos). He asks you to "build the Notice from V12 of 11e" or similar. Do NOT allocate a new number — work with the V# he's already used.
+Paul created the variation folder himself and dropped source material into it (notes, supplier quotes, invoices, plans, photos) — often straight from site. The folder may already follow the standard structure, OR it may be bare: no `V#` in the name and none of the 5 subfolders yet. He asks you to "build the Notice from V12 of 11e" or "organise the photos I just saved and raise it". Do NOT allocate a new number if he already used one — work with the V# he's chosen.
 
-1. **Identify the V-folder.** List `…/Variations/V# - …/` for the named project (Phase 2 for 10w).
-2. **Read all readable files** in `01_Source/` and `02_Costing/` via Dropbox MCP `get_file_content`. Text-bearing files (.docx, .pdf, .xlsx, .txt) extract cleanly. **Images (.jpg, .png) do NOT extract** — you only see filenames; rely on those descriptively, and if you genuinely need to see a photo, ask Paul to drop it into chat.
-3. **Summarise what you found** back to Paul (e.g. "Found a Mitre 10 quote for $1,840, a plumber email confirming $2,200 + GST, three site photos named …") and confirm the scope you'll write.
-4. **Stub / update the register row** for that V#. If a row already exists, update it; don't duplicate.
-5. **Draft the Notice** (Phase 1 or Phase 2 depending on whether the price is finalised) and deliver it via SendUserFile.
-6. **Tell Paul exactly what to upload where** — typically just the new Notice into `03_Notice/` and the updated register into the project's Variations folder.
+1. **Identify the folder** under `…/Variations/` for the named project (Phase 2 for 10w), and confirm which one he means.
+2. **Normalise the folder if needed — confirm the move plan with Paul first, then act.** If the folder is bare/unstructured: (a) if the name has no `V#`, allocate the next number (list the Variations folder, take max+1) and rename the folder to `V<n> - <slug>` via Dropbox `move`; (b) create the 5 standard subfolders; (c) `move` loose photos into `01_Source/photos/` and other loose files into `01_Source/`. Ask before moving anything into `02_Costing/` (internal-cost material). **Moving files Paul already saved to Dropbox is always fine** — the MCP can move/rename existing files of any type; the binary limitation only blocks *uploading new* .xlsx/.docx/.pdf/images from outside Dropbox.
+3. **Read all readable files** in `01_Source/` and `02_Costing/` via Dropbox MCP `get_file_content`. Text-bearing files (.docx, .pdf, .xlsx, .txt) extract cleanly. **Images (.jpg, .png) do NOT extract** — you only see filenames; rely on those descriptively, and if you genuinely need to see a photo, ask Paul to drop it into chat.
+4. **Summarise what you found** back to Paul (e.g. "Found a Mitre 10 quote for $1,840, a plumber email confirming $2,200 + GST, three site photos named …") and confirm the scope you'll write.
+5. **Stub / update the register row** for that V#. If a row already exists, update it; don't duplicate.
+6. **Draft the Notice** (Phase 1 or Phase 2 depending on whether the price is finalised) and deliver it via SendUserFile.
+7. **Tell Paul exactly what to upload where** — typically just the new Notice into `03_Notice/` and the updated register into the project's Variations folder.
 
 ## Active projects (source of truth: `scripts/config.json`)
 
