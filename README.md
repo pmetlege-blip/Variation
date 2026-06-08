@@ -28,6 +28,7 @@ in NSW, compliant with the **Home Building Act 1989 (NSW)** and the
 Variation/
 ├── README.md                            this file
 ├── docs/
+│   ├── project_setup.md                 One-time per-project setup + client lookup
 │   ├── folder_structure.md              Dropbox layout per project / variation
 │   ├── workflow.md                      Two-phase workflow + diagram
 │   ├── email_parsing_checklist.md       What to extract from each email
@@ -65,8 +66,11 @@ When Paul forwards an email containing an invoice or variation request:
 ## Start here
 
 - New to the system? Read `docs/workflow.md` first.
-- Setting up a new project? Copy `templates/master_register_template.xlsx`
-  into the project's Dropbox folder and rename it.
+- Setting up a new project? Follow `docs/project_setup.md`. Client details are
+  read by default from the project's Write Up at
+  `<project>/Tender Information/Write Up/`; Paul supplies the contract date and
+  original contract sum. Run `scripts/setup_project_register.py` to generate the
+  register, then upload it to the project's `Variations/` folder.
 - Need to check compliance? See `docs/legal_compliance.md`.
 
 ## Logo
