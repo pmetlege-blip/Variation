@@ -24,8 +24,6 @@ Paul forwards an email or describes the variation. No V-folder exists yet.
 8. **Draft the Variation Notice** (Phase 1 — RAISED) from `templates/variation_notice_template.docx`. Deliver as `.docx` and `.pdf` for Paul to upload to `03_Notice/`.
 9. **Tell Paul exactly what to upload where**, and which client email address(es) to send the Notice to.
 
-When the price is later finalised, repeat steps 7–9 but for Phase 2 — FINALISED.
-
 ### Pattern B — Paul has already started the V-folder
 
 Paul created the variation folder himself and dropped source material into it (notes, supplier quotes, invoices, plans, photos) — often straight from site. The folder may already follow the standard structure, OR it may be bare: no `V#` in the name and none of the 5 subfolders yet. He asks you to "build the Notice from V12 of 11e" or "organise the photos I just saved and raise it". Do NOT allocate a new number if he already used one — work with the V# he's chosen.
@@ -37,6 +35,56 @@ Paul created the variation folder himself and dropped source material into it (n
 5. **Stub / update the register row** for that V#. If a row already exists, update it; don't duplicate.
 6. **Draft the Notice** (Phase 1 or Phase 2 depending on whether the price is finalised) and deliver it via SendUserFile.
 7. **Tell Paul exactly what to upload where** — typically just the new Notice into `03_Notice/` and the updated register into the project's Variations folder.
+
+## Variations evolve — the iterative Notice pattern
+
+Most variations take days or weeks to fully scope and price. A single V# can carry **multiple Phase 1 Notice iterations** before Phase 2 FINALISED. Same V#, same folder, same register row — only the Notice version increments. Never overwrite a prior Notice; each iteration is a new file in `03_Notice/`, naming `V<n>_v<k>_<STATE>_<YYMMDD>.pdf`.
+
+### The three shapes of a Phase 1 RAISED Notice
+
+Decide which one applies before drafting. The banner text and price block on the Notice change accordingly:
+
+| Shape | When to use | Notice banner | Price block | Time impact |
+|---|---|---|---|---|
+| **TBC ("blank cheque")** | Site finding, supplier hasn't quoted, no cost signal yet | `PHASE 1 — RAISED (PRICE TO BE CONFIRMED)` | "Price to be confirmed under a subsequent Notice. The client acknowledges that a variation will arise from the scope described above; cost will follow once supplier quotes are received." | "To be confirmed" if unknown, or a working estimate marked INDICATIVE |
+| **Indicative** | You have a range or rough single figure | `PHASE 1 — RAISED (INDICATIVE PRICE)` | "INDICATIVE: $X,XXX inc GST (estimate only). Final price will be confirmed in the Phase 2 Notice." For a range: "INDICATIVE: $X,XXX – $Y,YYY inc GST." | Indicative days, marked INDICATIVE |
+| **Fixed (Phase 1)** | Price is firm, just awaiting client signature | `PHASE 1 — RAISED (PRICE CONFIRMED, AWAITING ACKNOWLEDGMENT)` | "$X,XXX inc GST (fixed). Awaiting client signature to move to Phase 2 — FINALISED." | Confirmed days |
+
+All three legally satisfy NSW HBA s.7AAA (variation in writing before performed); the TBC shape is the one that protects Paul when the cost truly isn't known yet — DO NOT delay the Notice waiting for cost figures.
+
+### When info evolves — same V# or new V#?
+
+- **Same V#, new Notice version** (v2, v3, …): same scope, new cost info, scope clarification, or moving from TBC → Indicative → Fixed. This is the common case.
+- **Same V#, supplementary Notice**: scope expansion that's *clearly part of the same work* (e.g. discovered asbestos pocket adjacent to the asbestos already being addressed). Issue a new Notice version, update the scope paragraph, note the change in the Notes column of the register.
+- **New V#**: scope changes substantially or introduces clearly separate work (e.g. original was "bathroom rot"; now also "kitchen rewire"). Allocate a new V# and cross-reference both in the Notes columns.
+
+When in doubt, ASK Paul — he makes the call.
+
+### Register evolution across iterations
+
+The register row for a V# is updated, not duplicated, as the variation evolves:
+
+- **Date Raised** (col B): set once, on the first Phase 1 Notice. Never changes — this is the legal "date of notice" for s.7AAA.
+- **Status** (col C): walks through `RAISED → PRICED → FINALISED → APPROVED → INVOICED`.
+- **Phase** (col D): `1 — RAISED` while any Phase 1 iteration is current; flips to `2 — FINALISED` only when the FINALISED Notice issues.
+- **Cost columns** (Materials/Labour/Subcontractor/Plant/Other): fill in as supplier quotes arrive. Leave blank when unknown.
+- **Price columns**: only populate when you have actual figures. TBC notices leave these blank.
+- **Notice v1 issued** (date): the FIRST Phase 1 Notice (the legal date). Immutable.
+- **Notice v2 issued** (date): the Phase 2 FINALISED Notice date. Intermediate Phase 1 reissues are tracked in **Notes** + the file list under `03_Notice/`.
+- **Notes**: log each iteration date + what changed ("v2 issued 23/05: indicative est $4-6k", "v3 issued 02/06: indicative $5.8k").
+
+### Notice file naming for iterations
+
+```
+03_Notice/
+  V5_v1_RAISED_260516.pdf      ← TBC, day 1
+  V5_v2_RAISED_260523.pdf      ← indicative, day 8
+  V5_v3_RAISED_260602.pdf      ← indicative refined, day 18
+  V5_v4_FINALISED_260606.pdf   ← fixed final, day 22
+  V5_v4_SIGNED_260608.pdf      ← client signature returned
+```
+
+Always keep prior versions — they are the audit trail.
 
 ## Active projects (source of truth: `scripts/config.json`)
 
