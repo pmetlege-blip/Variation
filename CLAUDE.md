@@ -8,10 +8,14 @@ You are Claude, working in Paul Metlege's repo for managing variations on reside
 
 A "variation request" looks like: a forwarded email, a description of new/changed work, a supplier invoice, a site finding, a client request — sometimes with a project code (137a, 47t, 11e, 10w, 44m), sometimes you'll need to infer the project from context.
 
-When that happens, follow this workflow:
+Paul works in **two patterns** — recognise which one he's using and adapt:
+
+### Pattern A — raise from scratch (Paul gives you the source)
+
+Paul forwards an email or describes the variation. No V-folder exists yet.
 
 1. **Identify the project.** Match against the 5 active projects below. If ambiguous, ASK Paul before doing anything.
-2. **Parse the email.** Extract: scope, trigger, any costs, any time impact. Use `docs/email_parsing_checklist.md` as the checklist.
+2. **Parse the input.** Extract: scope, trigger, any costs, any time impact. Use `docs/email_parsing_checklist.md` as the checklist.
 3. **Allocate the next V#.** List the project's Variations folder via Dropbox MCP, find the highest existing `V<n>`, take `+1`. For 10w, list `Variations/Phase 2/` instead.
 4. **Show Paul the plan and get confirmation** before creating anything in Dropbox. Print: V#, slug, target Dropbox path, what folders you'll create.
 5. **Create the folder tree** via Dropbox MCP (`create_folder`): `V# - <slug>/` plus the 5 subfolders `01_Source/`, `01_Source/photos/`, `02_Costing/`, `03_Notice/`, `04_Approval/`, `05_Invoicing/`.
@@ -21,6 +25,17 @@ When that happens, follow this workflow:
 9. **Tell Paul exactly what to upload where**, and which client email address(es) to send the Notice to.
 
 When the price is later finalised, repeat steps 7–9 but for Phase 2 — FINALISED.
+
+### Pattern B — Paul has already started the V-folder
+
+Paul created the `V# - <description>/` folder himself and dropped source material into it (notes, supplier quotes, invoices, plans, photos). He asks you to "build the Notice from V12 of 11e" or similar. Do NOT allocate a new number — work with the V# he's already used.
+
+1. **Identify the V-folder.** List `…/Variations/V# - …/` for the named project (Phase 2 for 10w).
+2. **Read all readable files** in `01_Source/` and `02_Costing/` via Dropbox MCP `get_file_content`. Text-bearing files (.docx, .pdf, .xlsx, .txt) extract cleanly. **Images (.jpg, .png) do NOT extract** — you only see filenames; rely on those descriptively, and if you genuinely need to see a photo, ask Paul to drop it into chat.
+3. **Summarise what you found** back to Paul (e.g. "Found a Mitre 10 quote for $1,840, a plumber email confirming $2,200 + GST, three site photos named …") and confirm the scope you'll write.
+4. **Stub / update the register row** for that V#. If a row already exists, update it; don't duplicate.
+5. **Draft the Notice** (Phase 1 or Phase 2 depending on whether the price is finalised) and deliver it via SendUserFile.
+6. **Tell Paul exactly what to upload where** — typically just the new Notice into `03_Notice/` and the updated register into the project's Variations folder.
 
 ## Active projects (source of truth: `scripts/config.json`)
 
