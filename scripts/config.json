@@ -27,24 +27,32 @@
       "dropbox_folder": "Annandale - 137 Annandale Street",
       "project_name": "137 Annandale Street, Annandale",
       "client": "Jon and Stacey Day",
+      "contract_date": "2025-08-20",
+      "original_contract_sum_inc_gst": 2997386,
       "variations_path": "Variations"
     },
     "47t": {
       "dropbox_folder": "Haberfield - 47 Tillock Street",
       "project_name": "47 Tillock Street, Haberfield",
       "client": "Joanne King",
+      "contract_date": "2025-08-27",
+      "original_contract_sum_inc_gst": 435000,
       "variations_path": "Variations"
     },
     "11e": {
       "dropbox_folder": "Lilyfield - 11 Eric Street",
       "project_name": "11 Eric Street, Lilyfield",
       "client": "Nicholas Lewis and Sarah Johnson",
+      "contract_date": "2025-06-19",
+      "original_contract_sum_inc_gst": 722790,
       "variations_path": "Variations"
     },
     "10w": {
       "dropbox_folder": "Taren Point - 10 Woodlands Road",
       "project_name": "10 Woodlands Road, Taren Point",
       "client": "Chris and Joanna Gialouris",
+      "contract_date": "2025-03-21",
+      "original_contract_sum_inc_gst": null,
       "variations_path": "Variations/Phase 2",
       "notes": "Staged project. Work ONLY in the 'Phase 2' subfolder of Variations; the 'Phase 1' section is historical and must NEVER be created in or modified. Contract sum is TBC."
     },
@@ -52,6 +60,8 @@
       "dropbox_folder": "Sylvania Waters - 44 Macintyre Crescent",
       "project_name": "44 Macintyre Crescent, Sylvania Waters",
       "client": "David and Vivian Salim",
+      "contract_date": "2025-07-27",
+      "original_contract_sum_inc_gst": 1290601.40,
       "variations_path": "Variations"
     }
   }

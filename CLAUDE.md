@@ -21,7 +21,7 @@ Paul forwards an email or describes the variation. No V-folder exists yet.
 5. **Create the folder tree** via Dropbox MCP (`create_folder`): `V# - <slug>/` plus the 5 subfolders `01_Source/`, `01_Source/photos/`, `02_Costing/`, `03_Notice/`, `04_Approval/`, `05_Invoicing/`.
 6. **File the source email** into `01_Source/` as a text file (Dropbox MCP `create_file` accepts text). Use Outlook MCP if attachments need fetching.
 7. **Stub the register row.** Generate the updated `.xlsx` locally with `scripts/create_variation.py`. Then deliver it to Paul via SendUserFile for him to drop into the project's Variations folder (or Phase 2 for 10w) — the Dropbox MCP **cannot upload .xlsx directly**, only text.
-8. **Draft the Variation Notice** (Phase 1 — RAISED) from `templates/variation_notice_template.docx`. Deliver as `.docx` and `.pdf` for Paul to upload to `03_Notice/`.
+8. **Generate the Variation Notice** with `scripts/generate_notice.py` (it fills the template and auto-switches the banner + price block by `--shape`; see "the three shapes" below). Deliver the `.docx` (and `.pdf` if produced) for Paul to upload to `03_Notice/`.
 9. **Tell Paul exactly what to upload where**, and which client email address(es) to send the Notice to.
 
 ### Pattern B — Paul has already started the V-folder
@@ -42,7 +42,7 @@ Most variations take days or weeks to fully scope and price. A single V# can car
 
 ### The three shapes of a Phase 1 RAISED Notice
 
-Decide which one applies before drafting. The banner text and price block on the Notice change accordingly:
+Decide which one applies, then pass it to `scripts/generate_notice.py --shape <tbc|indicative|fixed|finalised>` — the script sets the banner, price section, and contract-sum effect automatically. The banner text and price block change as follows:
 
 | Shape | When to use | Notice banner | Price block | Time impact |
 |---|---|---|---|---|
@@ -105,8 +105,9 @@ Always keep prior versions — they are the audit trail.
 - **GitHub MCP** — limited to the `pmetlege-blip/variation` repo only.
 - **Python scripts** in `scripts/`:
   - `create_variation.py` — allocates V#, plans the folder tree, stubs a register row. Takes `--project-code` to honor per-project rules (e.g. 10w → Phase 2).
+  - `generate_notice.py` — produces a FILLED Notice (.docx, optional .pdf) for a given `--project-code --var --shape`. `--shape tbc|indicative|fixed|finalised` auto-switches the banner + price block. Reads client/contract facts from `config.json`. PDF export needs a working LibreOffice; if absent it writes the .docx and Paul exports to PDF from Word.
   - `setup_project_register.py` — one-time, generates a project's master register.
-  - `build_register_template.py` and `build_notice_template.py` — regenerate the .xlsx and .docx templates from `config.json`.
+  - `build_register_template.py` and `build_notice_template.py` — regenerate the blank .xlsx and .docx templates from `config.json`.
 
 ## Rules — non-negotiable
 
