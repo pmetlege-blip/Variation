@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Dropbox__list_folder",
+      "mcp__Dropbox__get_file_content",
+      "mcp__Dropbox__get_file_metadata",
+      "mcp__Dropbox__search",
+      "mcp__Dropbox__download_link",
+      "mcp__Dropbox__check_job_status",
+      "mcp__Dropbox__create_file",
+      "mcp__Dropbox__create_folder",
+      "mcp__Dropbox__move",
+      "mcp__Dropbox__copy",
+      "mcp__ms365__outlook_email_search",
+      "mcp__ms365__read_resource"
+    ],
+    "ask": [
+      "mcp__Dropbox__delete",
+      "mcp__Dropbox__restore_folder",
+      "mcp__Dropbox__restore_file_revision"
+    ]
+  }
+}
